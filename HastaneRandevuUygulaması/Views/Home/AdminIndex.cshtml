@@ -1,0 +1,11 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Admin")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}

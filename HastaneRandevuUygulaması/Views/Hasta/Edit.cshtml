@@ -1,0 +1,74 @@
+﻿@model HastaneRandevuUygulaması.Models.Hasta
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Admin")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Edit</h1>
+
+<h4>Hasta</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="hastaId" />
+            <div class="form-group">
+                <label asp-for="hastaName" class="control-label"></label>
+                <input asp-for="hastaName" class="form-control" />
+                <span asp-validation-for="hastaName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hastaLastName" class="control-label"></label>
+                <input asp-for="hastaLastName" class="form-control" />
+                <span asp-validation-for="hastaLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tc" class="control-label"></label>
+                <input asp-for="tc" class="form-control" />
+                <span asp-validation-for="tc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dogumTarihi" class="control-label"></label>
+                <input asp-for="dogumTarihi" class="form-control" />
+                <span asp-validation-for="dogumTarihi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

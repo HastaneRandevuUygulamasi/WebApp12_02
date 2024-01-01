@@ -1,0 +1,46 @@
+﻿@model HastaneRandevuUygulaması.Models.Doktor
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Admin")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+<h1>Edit</h1>
+
+<h4>Doktor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="doktorId" />
+            <div class="form-group">
+                <label asp-for="doktorName" class="control-label"></label>
+                <input asp-for="doktorName" class="form-control" />
+                <span asp-validation-for="doktorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="poliklinikId" class="control-label"></label>
+                <select asp-for="poliklinikId" class="form-control" asp-items="ViewBag.poliklinikId"></select>
+                <span asp-validation-for="poliklinikId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

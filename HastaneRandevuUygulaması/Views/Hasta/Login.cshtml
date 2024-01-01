@@ -1,0 +1,23 @@
+﻿@model HastaneRandevuUygulaması.Models.Hasta
+@{
+    ViewBag.Title = "Giriş Sayfası";
+}
+
+<div class="login-container" >
+    <h2 class="display-4 border-bottom text-center pb-2">Giriş Yap</h2>
+    <form asp-controller="Hasta" asp-action="LoginControl" method="post">
+        <div class="form-group mb-3 col-4 offset-4">
+            <label asp-for="tc" class="control-label">TC Kimlik No</label>
+            <input asp-for="tc" class="form-control" required />
+            <span asp-validation-for="tc" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3 col-4 offset-4">
+            <label asp-for="Password" class="control-label">Şifre</label>
+            <input asp-for="Password" type="password" class="form-control" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group  d-block display-4 text-center pb-2">
+            <input type="submit" class="btn btn-primary" value="Giriş Yap" />
+        </div>
+    </form>
+</div>

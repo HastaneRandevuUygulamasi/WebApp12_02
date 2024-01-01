@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HastaneRandevuUygulaması.Models.Hastane>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Admin")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.hastaneAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ilce)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.hastaneAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ilce.ilceID)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.hastaneId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.hastaneId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

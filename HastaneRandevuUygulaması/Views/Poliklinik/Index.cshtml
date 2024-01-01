@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HastaneRandevuUygulaması.Models.Poliklinik>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Admin")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.poliklinikName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hastane)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.poliklinikName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hastane.hastaneId)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.poliklinikId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.poliklinikId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

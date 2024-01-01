@@ -1,0 +1,61 @@
+﻿@model IEnumerable<HastaneRandevuUygulaması.Models.Hasta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Hasta")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.hastaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hastaLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dogumTarihi)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (HttpContextAccessor.HttpContext.Session.GetString("SessionUser") == item.tc)
+            {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.hastaName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.hastaLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dogumTarihi)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HastaneRandevuUygulaması.Models.Randevu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject IHttpContextAccessor HttpContextAccessor
+@if (HttpContextAccessor.HttpContext.Session.GetString("Yetki") != "Hasta")
+{
+    var url = Url.Content("~/Home/Index");
+    <script type="text/javascript">
+        window.location.href = '@url';
+    </script>
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.randevuTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.doktor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hasta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.randevuTarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.doktor.doktorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hasta.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.randevuId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.randevuId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.randevuId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

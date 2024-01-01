@@ -1,0 +1,21 @@
+﻿
+@model HastaneRandevuUygulaması.Models.AdminGiris
+
+<div class="login-container">
+    <h2 class ="display-4 border-bottom text-center pb-2">Giriş Yap</h2>
+    <form asp-controller="Home" asp-action="AdminGirisKontrol" method="post">
+        <div class="form-group mb-3 col-4 offset-4">
+            <label asp-for="Email" class="control-label">E-mail</label>
+            <input asp-for="Email" type="email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3 col-4 offset-4">
+            <label asp-for="Sifre" class="control-label">Şifre</label>
+            <input asp-for="Sifre" type="password" class="form-control" required />
+            <span asp-validation-for="Sifre" class="text-danger"></span>
+        </div>
+        <div class="form-group  d-block display-4 text-center pb-2">
+            <input type="submit" class="btn btn-primary" value="Giriş Yap" />
+        </div>
+    </form>
+</div>
