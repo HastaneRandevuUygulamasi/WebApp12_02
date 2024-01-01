@@ -1,4 +1,5 @@
 ﻿@model HastaneRandevuUygulaması.Models.Randevu
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 @{
     ViewData["Title"] = "Create";
@@ -20,6 +21,8 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+ 
+          
             <div class="form-group">
                 <label asp-for="randevuTarihi" class="control-label"></label>
                 <input asp-for="randevuTarihi" class="form-control" />
@@ -35,7 +38,9 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            </div> 
+
+
         </form>
     </div>
 </div>

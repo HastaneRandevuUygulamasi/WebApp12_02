@@ -36,7 +36,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Randevu" asp-action="Index">Randevu</a>
                         </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CallHastaApi" asp-action="Index">Api Çağırma</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="HastaApi" asp-action="GetHasta">----API Postman ile test et---</a>
+                        </li>
                     </ul>
                     @if (HttpContextAccessor.HttpContext.Session.GetString("SessionUser") is null)
                     {
