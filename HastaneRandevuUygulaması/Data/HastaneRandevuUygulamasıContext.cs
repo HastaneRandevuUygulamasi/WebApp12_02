@@ -23,5 +23,7 @@ namespace HastaneRandevuUygulaması.Data
         public DbSet<HastaneRandevuUygulaması.Models.Poliklinik>? Poliklinik { get; set; }
 
         public DbSet<HastaneRandevuUygulaması.Models.Randevu>? Randevu { get; set; }
+        public DbSet<HastaneRandevuUygulaması.Models.il>? il { get; set; }
+        public DbSet<HastaneRandevuUygulaması.Models.ilce>? ilce { get; set; }
     }
 }

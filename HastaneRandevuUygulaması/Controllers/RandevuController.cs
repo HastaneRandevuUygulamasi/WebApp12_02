@@ -49,8 +49,7 @@ namespace HastaneRandevuUygulaması.Controllers
         // GET: Randevu/Create
         public IActionResult Create()
         {
-            ViewData["doktorId"] = new SelectList(_context.Doktor, "doktorId", "doktorId");
-            ViewData["hastaId"] = new SelectList(_context.Hasta, "hastaId", "Email");
+            ViewData["ilId"] = new SelectList(_context.Hasta, "ilId", "ilAdi");
             return View();
         }
 
@@ -165,6 +164,24 @@ namespace HastaneRandevuUygulaması.Controllers
         private bool RandevuExists(int id)
         {
           return (_context.Randevu?.Any(e => e.randevuId == id)).GetValueOrDefault();
+        }
+        public JsonResult GetIlceler(int ilId)
+        {
+            var ilceler = _context.ilce.Where(ilce=> ilce.ilceID == ilId).ToList();
+        return Json(new SelectList(ilceler, "Value", "Text"));
+        }
+
+        // Hastaneleri getir
+        public JsonResult GetHastaneler(int ilceId)
+        {
+            var hastaneler = _context.Hastane.Where(hastane => hastane.ilceId == ilceId).ToList();
+            return Json(new SelectList(hastaneler, "Value", "Text"));
+        }
+        // Hastaneleri getir
+        public JsonResult GetPoliklinikler(int hastaneId)
+        {
+            var poliklinikler = _context.Poliklinik.Where(poliklinik => poliklinik.hastaneId == hastaneId).ToList();
+            return Json(new SelectList(poliklinikler, "Value", "Text"));
         }
     }
 }

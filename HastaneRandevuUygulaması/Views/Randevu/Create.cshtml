@@ -24,30 +24,142 @@
  
           
             <div class="form-group">
-                <label asp-for="randevuTarihi" class="control-label"></label>
-                <input asp-for="randevuTarihi" class="form-control" />
-                <span asp-validation-for="randevuTarihi" class="text-danger"></span>
+                <label id="il" asp-for="doktor.poliklinik.hastane.ilce.ilID" class="control-label"></label>
+                <select id="il" asp-for="doktor.poliklinik.hastane.ilce.ilID" class="form-control" asp-items="ViewBag.ilId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="doktorId" class="control-label"></label>
-                <select asp-for="doktorId" class ="form-control" asp-items="ViewBag.doktorId"></select>
+                <label for="ilce" class="control-label"></label>
+                <select id="ilce" class="form-control" ></select>
             </div>
             <div class="form-group">
-                <label asp-for="hastaId" class="control-label"></label>
-                <select asp-for="hastaId" class ="form-control" asp-items="ViewBag.hastaId"></select>
+                <label for="hastane" class="control-label"></label>
+                <select id="hastane" class="form-control"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div> 
-
+                <label for="poliklinik" class="control-label"></label>
+                <select id="poliklinik" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label for="doktor" class="control-label"></label>
+                <select id="doktor" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="randevuTarihi.Date" class="control-label"></label>
+                <select asp-for="randevuTarihi.Date" id="Gun" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="randevuTarihi.Hour" class="control-label"></label>
+                <select asp-for="randevuTarihi.Hour" id="Saat" class="form-control"></select>
+            </div>
 
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        doldurTarihler();
+        doldurSaatler();
+        // Şehir seçildiğinde ilçeleri getir
+        $('#il').change(function () {
+            var ilId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetIlceler", "Randevu")',
+                type: "GET",
+                data: { ilId: ilId },
+                success: function (ilceler) {
+                    $('#ilce').empty();
+                    $('#ilce').append('<option value="">İlçe Seçin</option>');
+                    $.each(ilceler, function (i, ilce) {
+                        $('#ilce').append('<option value="' + ilce.value + '">' + ilce.text + '</option>');
+                    });
+                }
+            });
+        });
+
+        // İlçe seçildiğinde hastaneleri getir
+        $('#ilce').change(function () {
+            var ilceId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetHastaneler", "Randevu")',
+                type: "GET",
+                data: { ilceId: ilceId },
+                success: function (hastaneler) {
+                    $('#hastane').empty();
+                    $('#hastane').append('<option value="">Hastane Seçin</option>');
+                    $.each(hastaneler, function (i, hastane) {
+                        $('#hastane').append('<option value="' + hastane.value + '">' + hastane.text + '</option>');
+                    });
+                }
+            });
+        });
+        // İlçe seçildiğinde hastaneleri getir
+        $('#hastane').change(function () {
+            var hastaneId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetPoliklinkler", "Randevu")',
+                type: "GET",
+                data: { hastaneId: hastaneId },
+                success: function (polikilinikler) {
+                    $('#poliklinik').empty();
+                    $('#poliklinik').append('<option value="">poliklinik Seçin</option>');
+                    $.each(poliklinikler, function (i, poliklinik) {
+                        $('#poliklinik').append('<option value="' + poliklinik.value + '">' + poliklinik.text + '</option>');
+                    });
+                }
+            });
+        });
+        // İlçe seçildiğinde hastaneleri getir
+        $('#poliklinik').change(function () {
+            var poliklinikId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetDoktorlar", "Randevu")',
+                type: "GET",
+                data: { ilceId: ilceId },
+                success: function (doktorlar) {
+                    $('#doktor').empty();
+                    $('#doktor').append('<option value="">doktor Seçin</option>');
+                    $.each(doktorlar, function (i, doktor) {
+                        $('#hastane').append('<option value="' + doktor.value + '">' + doktor.text + '</option>');
+                    });
+                }
+            });
+        });
+        // İlçe seçildiğinde hastaneleri getir
+        $('#doktor').change(function () {
+            
+        });
+        // İlçe seçildiğinde hastaneleri getir
+        
+
+
+       
+    });
+    function doldurTarihler() {
+        var tarihSelect = $('#tarih');
+        tarihSelect.empty();
+        var bugun = new Date();
+        for (var i = 0; i < 10; i++) {
+            var tarih = new Date();
+            tarih.setDate(bugun.getDate() + i);
+            var dd = String(tarih.getDate()).padStart(2, '0');
+            var mm = String(tarih.getMonth() + 1).padStart(2, '0'); // Ocak 0'dan başlar
+            var yyyy = tarih.getFullYear();
+            tarihSelect.append($('<option></option>').val(yyyy + '-' + mm + '-' + dd).html(dd + '/' + mm + '/' + yyyy));
+        }
+    }
+
+    function doldurSaatler() {
+        var saatSelect = $('#saat');
+        saatSelect.empty();
+        for (var saat = 8; saat <= 17; saat++) {
+            for (var dakika = 0; dakika < 60; dakika += 15) {
+                var saatDakika = String(saat).padStart(2, '0') + ':' + String(dakika).padStart(2, '0');
+                saatSelect.append($('<option></option>').val(saatDakika).html(saatDakika));
+            }
+        }
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
